@@ -1,0 +1,20 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+<div class="card mb-3">
+  <h2 class="card-header bg-dark text-white">{{post.title}}</h2>
+  <div class="card-body">
+    <p>{{post.created_at}}, {{post.category}}</p>
+    {{post.text|linebreaksbr|urlize}} <!--urlize URLぽい文字列があればアンカータグにしてくれる-->
+  </div>
+</div>
+{% for comment in post.comment_set.all %} <!--モデルA.モデルAに紐づいたモデルB_set.allでモデルAに紐づいたモデルBの属性を全て取得できる-->
+<p>
+  {{comment.name}}
+  {{comment.text|linebreaksbr}}
+</p>
+{% endfor %}
+
+<a href="{% url 'blog:comment' post.pk %}" class="btn btn-link">コメントへ</a>
+{% endblock %}
