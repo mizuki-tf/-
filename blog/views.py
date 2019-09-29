@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import Q,Count
 from django.shortcuts import get_object_or_404,redirect
 from django.views import generic
 from .models import Post, Category, Comment
@@ -10,7 +10,7 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """データの順番の入れ替えは order_by を使用.引数はフィールド名を指定"""
-        queryset = Post.objects.order_by('-created_at')
+        queryset = Post.objects.order_by('-created_at') #全データを最新順にして取得
         keyword = self.request.GET.get('keyword') #検索フォームの入力内容取得
         if keyword:
             """
@@ -32,6 +32,7 @@ class CategoryView(generic.ListView):
         queryset = Post.objects.order_by('-created_at').filter(category=category)
         """
         category_pk = self.kwargs['pk']
+        """カテゴリーのプライマリーキーと一致するカテゴリーを抽出"""
         queryset = Post.objects.order_by('-created_at').filter(category__pk=category_pk) #__pkでプライマリーキー取得
         return queryset
 

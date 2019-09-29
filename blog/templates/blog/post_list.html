@@ -3,14 +3,22 @@
 {% block content %}
 {% for post in post_list %}
 <div class="card mb-3">
-  <h2 class="card-header bg-dark text-white">{{post.title}}</h2>
   <div class="card-body">
-    <p>{{post.created_at}}, {{post.category}}</p>
-    <a href="{% url 'blog:detail' post.pk %}" class="btn btn-link">記事へ</a>
+    <h3 class="card-title">
+      <a href="{% url 'blog:detail' post.pk %}" style="color: black;"><strong>{{post.title}}</strong></a>
+    </h3>
+    <div class="card-subtitle mb-2 text-muted">
+      {{post.created_at|date:"Y-m-j"}}  /  {{post.category}}
+    </div>
+    <div class="card-text">
+      {{post.text}}
+    </div>
   </div>
 </div>
 {% endfor %}
+<div class="container">
+  {%include 'blog/page.html'%}
+</div>
 
-{%include 'blog/page.html'%}
 
 {% endblock %}
