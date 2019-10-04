@@ -1,4 +1,5 @@
 {% extends 'blog/base.html' %}
+{% load static %}
 
 {% block content %}
 
@@ -12,12 +13,15 @@
   </div>
 </div>
 
-<div>
+<div class="comment">
+  <h3>コメント欄</h3>
   <a href="{% url 'blog:comment' post.pk %}" class="btn btn-link" target="_blank">記事にコメントする</a>
   {% for comment in post.comment_set.all %} <!--モデルA.モデルAに紐づいたモデルB_set.allでモデルAに紐づいたモデルBの属性を全て取得できる.今回の例で言うと，カテゴリに紐づいた全ての記事や，記事に紐づいた全てのコメントを取得できる-->
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title">{{comment.name}}</h5>
+      <h6 class="card-title">
+        {{comment.name}}  {{comment.created_at|date:"Y-m-j"}}
+      </h6>
       <p class="card-text">
         {{comment.text|linebreaksbr}}
       </p>

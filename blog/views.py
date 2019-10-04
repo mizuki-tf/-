@@ -50,7 +50,7 @@ class CommentView(generic.CreateView):
     """
     def form_valid(self, form):
         post_pk = self.kwargs['post_pk']
-        comment = form.save(commit=False) #コメント保存の直前のデータ
+        comment = form.save(commit=False) #コメント保存の直前のモデルインスタンスを返す
         comment.post = get_object_or_404(Post,pk=post_pk) #post属性を指定．つまり記事の指定
         comment.save() #ここでDBに保存
         return redirect('blog:detail',pk=post_pk)
